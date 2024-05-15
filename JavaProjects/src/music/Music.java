@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Music {
 	//prepares Scanner object to be used
-	static final Scanner scan = new Scanner(System.in);
+	private static final Scanner scan = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		musicMenu();
@@ -15,7 +15,7 @@ public class Music {
 			//prints menu and reads user input
 			System.out.print("Main Menu\n"
 					+ "-----------------------------------------\n"
-					+ "1) Transpose a list of notes\n"
+					+ "1) Transpose notes\n"
 					+ "2) Find the relative minor of a major key\n"
 					+ "3) Find the realtive major of a minor key\n"
 					+ "4) Quit\n"
@@ -58,54 +58,39 @@ public class Music {
 			//prints menu and reads user input
 			System.out.print("Transpose Menu\n"
 					+ "----------------------------------------------------------\n"
-					+ "1) Print the notes\n"
-					+ "2) Change the number of notes (you must reenter the notes)\n"
-					+ "3) Reenter the notes\n"
-					+ "4) Reenter a specific note\n"
-					+ "5) Change the original key\n"
-					+ "6) Change the transposed key\n"
-					+ "7) Return to Main Menu\n"
+					+ "1) Enter notes\n"
+					+ "2) Change the original key\n"
+					+ "3) Change the transposed key\n"
+					+ "4) Print information\n"
+					+ "5) Return to Main Menu\n"
 					+ ": ");
 			switch(scan.nextInt()) {
-				//case 1: prints the object
+				//case 1: lets user enter notes
 				case(1):
-					transposedNotes.print();
+					System.out.println("Enter notes\nEnter \'Quit\' to exit");
+					int stop = 0;
+					do{
+						stop = transposedNotes.enterNote();
+					}while(stop == 0);
 					break;
-					
-				//case 2: resizes noteList array and makes user reenter notes
-				case(2):
-					transposedNotes.setNoteListLength();
 				
-				//case 3: lets user reenter notes
-				case(3):
-					scan.nextLine();
-					for(int i = 0; i < transposedNotes.getNotesLength(); i++) {
-						transposedNotes.setNote(i);
-					}
-					break;
-					
-				//case 4: lets user reenter a specific note
-				case(4):
-					int index;
-					do {
-						System.out.print("Enter the index of the note you wish to change: ");
-						index = scan.nextInt();
-					} while(index < transposedNotes.getNotesLength()-1 && index >=0);
-					transposedNotes.setNote(index);
-					break;
-					
-				//case 5: lets user change original key
-				case(5):
+				//case 2: lets user change original key
+				case(2):
 					transposedNotes.setOriginalKey();
 					break;
 					
-				//case 6: lets user change transposed key
-				case(6):
+				//case 3: lets user change transposed key
+				case(3):
 					transposedNotes.setTransposeKey();
 					break;
-					
-				//case 7: returns to main menu
-				case(7):
+				
+				//case 4: prints out information about the transposition object
+				case(4):
+					transposedNotes.print();
+					break;
+				
+				//case 5: returns to main menu
+				case(5):
 					return;
 				
 				//default case: prints error message
